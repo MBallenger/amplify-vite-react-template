@@ -6,7 +6,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 const client = generateClient<Schema>();
 
 function App() {
-  const { signOut } = useAuthenticator();
+  const { user, signOut } = useAuthenticator();
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   useEffect(() => {
@@ -25,25 +25,24 @@ function App() {
 
   return (
     <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
+      <h1>{user?.signInDetails?.loginId}'s todos</h1>
+      <button onClick={createTodo}>+ event</button>
       <ul>
-        {todos.map((todo) => (
-            
-          <li onClick={() => deleteTodo(todo.id)}
-          key={todo.id}>{todo.content}</li>
-        ))}
+        {todos.map(todo => <li 
+        
+          onClick={() => deleteTodo(todo.id)}
+          key={todo.id}>
+            {todo.content}
+        </li>)}
       </ul>
       <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
+        🥳 Use this doc to choose your nationals events: 
+        <a href="https://docs.google.com/document/d/11g-V50oBkDWGl0DcCVbD5Pf6VAJgL_kqvZ0JlVRiR6I/edit?usp=sharing"> doc here
         </a>
       </div>
       <button onClick={signOut}>Sign out</button>
     </main>
-  );
+  )
 }
 
 export default App;
